@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<script type="text/javascript" src="./plupload.full.min.js"></script>
+<body>
+	<div id="container">
+		<input type="file" name="" id="uploadButton">
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+        //在实例对象上调用init()方法进行初始化
+            var uploader = new plupload.Uploader({
+                runtimes: 'html5,flash,silverlight,html4',
+                browse_button: 'uploadButton', // you can pass an id...
+                container: document.getElementById('container'), // ... or DOM Element itself
+                url: '', //服务器地址
+                multipart_params: {
+                    name: result.name + ".png", //阿里云图片名称 + 目录
+                    key: result.key + ".png",
+                    policy: result.policy,
+                    "x-oss-object-acl": result.object_acl, 
+                    OSSAccessKeyId: result.accessid,
+                    success_action_status: '200', //让服务端返回200，不设置则默认返回204
+                    signature: result.signature, //签名
+                }
+            });
+            uploader.init();
+            //绑定各种事件，并在事件监听函数中做你想做的事
+            uploader.bind('FilesAdded', function (uploader, files) {
+                uploader.start();
+            });
+            uploader.bind('UploadComplete', function (uploader, file) {
+                var icon_addr = result.host + "/" + result.key + ".png";
+                //icon_addr 为生成的阿里云图片地址
+                //每个事件监听函数都会传入一些很有用的参数，
+                //我们可以利用这些参数提供的信息来做比如更新UI，提示上传进度等操作
+            });
+
+
+
+</script>
